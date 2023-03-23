@@ -23,6 +23,7 @@ func init() {
 }
 
 func main() {
+	log.Println("Openai-on-wechat starting ...")
 	// 获取登陆的用户
 	self, err := bot.Bot.GetCurrentUser()
 	if err != nil {
