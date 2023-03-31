@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"sort"
 	"strings"
 
 	"github.com/riba2534/openai-on-wechat/ai"
@@ -14,6 +15,51 @@ import (
 	"github.com/sashabaranov/go-openai"
 )
 
+var (
+	IsAssist bool = false
+	isImage  bool = false
+)
+
+func MessageHandlerWithUser(msg *openwechat.Message) {
+	if !msg.IsText() {
+		return
+	}
+	fromName := msg.FromUserName
+	alias := msg.Owner().Alias
+	id := msg.Owner().ID()
+	log.Printf("Message from user:%s,alias:%s,ID:%s\n", fromName, alias, id)
+
+	switch strings.TrimSpace(msg.Content) {
+	case "run":
+		IsAssist = true
+	case "stop":
+		IsAssist = false
+	case "text":
+		isImage = false
+	case "image":
+		isImage = true
+	}
+	if !IsAssist {
+		return
+	}
+
+	sort.Strings(config.C.AssistConfig.Friends)
+	i := sort.SearchStrings(config.C.AssistConfig.Friends, fromName)
+	if fromName != config.C.AssistConfig.Friends[i] {
+		return
+	}
+
+	ctx := context.Background()
+	systemPrompt := config.Prompt
+	switch {
+	case isImage:
+		// 图片回复
+		go imageReplyHandler(ctx, msg, "")
+	default:
+		// 文字回复
+		go textSessionReplyHandler(ctx, msg, "", openai.GPT3Dot5Turbo, systemPrompt)
+	}
+}
 func MessageHandler(msg *openwechat.Message) {
 	if !msg.IsText() {
 		return

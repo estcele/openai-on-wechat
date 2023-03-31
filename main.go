@@ -31,6 +31,7 @@ func main() {
 		return
 	}
 	log.Printf("self=%s", utils.MarshalAnyToString(self))
-	bot.Bot.MessageHandler = MessageHandler // 微信消息回调注册
+	// bot.Bot.MessageHandler = MessageHandler // 微信消息回调注册
+	bot.Bot.MessageHandler = MessageHandlerWithUser
 	bot.Bot.Block()
 }
