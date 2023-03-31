@@ -18,6 +18,17 @@ var (
 type Config struct {
 	WechatConfig  *WechatConfig  `json:"wechat_config"`
 	ContextConfig *ContextConfig `json:"context_config"`
+	AssistConfig  *AssistConfig  `json:"assist_config"`
+}
+
+type AssistConfig struct {
+	Command *CommandConfig `json:"command"`
+	Friends []string       `json:"friends"`
+}
+
+type CommandConfig struct {
+	Run  string `json:"run"`
+	Stop string `json:"stop"`
 }
 
 type AuthConfig struct {
