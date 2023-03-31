@@ -1,0 +1,30 @@
+{
+    "wechat_config": {
+        "text_config": {
+            "openapi_url": "https://api.openai.com/v1",
+            "auth_token": "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",
+            "trigger_prefix": "小峰"
+        },
+        "image_config": {
+            "openapi_url": "https://api.openai.com/v1",
+            "auth_token": "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",
+            "trigger_prefix": "大峰"
+        }
+    },
+    "context_config": {
+        "switch_on": true,
+        "cache_minute": 3
+    },
+    "assist_config":{
+        "command":{
+            "run":"run",
+            "stop":"stop"
+        },
+        "friends":["张大峰","郑小芬","冯月嫦","Dennis'mama"],
+        "group":{
+            "valid":false,
+            "idlist":["827645468"]
+        },
+        "self":true
+    }
+}
