@@ -25,7 +25,7 @@ func MessageHandlerWithUser(msg *openwechat.Message) {
 		return
 	}
 	fromName := msg.FromUserName
-	alias := msg.Owner().Alias
+	alias := msg.Owner().NickName
 	id := msg.Owner().ID()
 	log.Printf("Message from user:%s,alias:%s,ID:%s\n", fromName, alias, id)
 
